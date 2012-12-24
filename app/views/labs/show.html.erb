@@ -1,0 +1,44 @@
+<%- model_class = Lab -%>
+<div class="page-header">
+  <h1><%=t '.title', :default => model_class.model_name.human %></h1>
+</div>
+
+<dl class="dl-horizontal">
+  <dt><strong><%= model_class.human_attribute_name(:name) %>:</strong></dt>
+  <dd><%= @lab.name %></dd>
+  <dt><strong><%= model_class.human_attribute_name(:description) %>:</strong></dt>
+  <dd><%= @lab.description %></dd>
+</dl>
+
+<div class="form-actions">
+  <%= link_to t('.back', :default => t("helpers.links.back")),
+              labs_path, :class => 'btn'  %>
+  <%= link_to t('.edit', :default => t("helpers.links.edit")),
+              edit_lab_path(@lab), :class => 'btn' %>
+  <%= link_to t('.destroy', :default => t("helpers.links.destroy")),
+              lab_path(@lab),
+              :method => 'delete',
+              :data => { :confirm => t('.confirm', :default => t("helpers.links.confirm", :default => 'Are you sure?')) },
+              :class => 'btn btn-danger' %>
+</div>
+
+<ul class="steps">
+  <% @lab.steps.each do |step| %>
+    <li><%= step.description %>
+    <%= link_to "I'm stuck", statuses_url('status[step_id]' => step.id, 'status[progress]' => 'Stuck', 'status[imac]' => session[:imac]), :method => 'post', :class => 'btn btn-danger', :remote => true %>
+    <%= link_to "I'm done", statuses_url('status[step_id]' => step.id, 'status[progress]' => 'Done', 'status[imac]' => session[:imac]), :method => 'post', :class => 'btn btn-success', :remote => true %></li>
+  <% end %>
+</ul>
+
+<ul class="statuses">
+  <% @lab.statuses.each do |status| %>
+    <%= render '/statuses/status', :status => status %>
+  <% end %>
+</ul>
+
+<%= subscribe_to "/labs/#{@lab.id}" %>
+
+
+
+
+

@@ -1,0 +1,11 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  step_id: 1
+  imac: MyString
+  progress: MyString
+
+two:
+  step_id: 1
+  imac: MyString
+  progress: MyString
